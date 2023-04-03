@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  app:
+      build:
+        context: .
+        dockerfile: ./docker/app/Dockerfile
+      command: >
+        sh -c 'sh ./docker/app/docker-entrypoint.sh &&
+        python main.py'
+      volumes:
+        - .:/app
+        - ./app:/var/lib/postgresql/data/
+      restart: always
+      ports:
+        - 3000:3000
+      expose:
+        - 3000
+      networks:
+        - networking
+      depends_on:
+        - db
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: multi
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    networks:
+      - networking
+    
+networks:
+  networking:
+    driver: bridge
+
+     
