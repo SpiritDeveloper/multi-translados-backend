@@ -15,7 +15,7 @@ class Main(MethodView):
         return jsonify(
             {
                 "starting": "Running...",
-                "name": "microservice-manage-campaning",
-                "version": "V2.3.1",
+                "name": "microservice-multitranslados",
+                "version": "V1.0.0",
             }
         )

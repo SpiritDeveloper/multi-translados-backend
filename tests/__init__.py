@@ -1,1 +1,1 @@
-from src.multi.app import *
+from src.multi import *

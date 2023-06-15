@@ -1,11 +1,11 @@
 import os
 from dotenv import load_dotenv
 from gevent.pywsgi import WSGIServer     
-from src.multi.app import app
+from src.multi import create_app
 
 load_dotenv()
 
-app = app
+app = create_app()
 
 if __name__ == '__main__':
     if os.getenv("SERVER_ENV") == 'PRODUCTION':
