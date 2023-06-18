@@ -5,12 +5,12 @@ from uuid import uuid4
 from .. import db
 
 
-class Users(db.Model):
+class Areas(db.Model):
 
-    __tablename__ = "users"
-    id        = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
-    email     = Column(String(80), nullable=False)
-    password  = Column(String(20), nullable=False)
+    __tablename__ = "areas"
+    id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
+    name        = Column(String(255), nullable=False)
+    description = Column(String(255), nullable=False)
     #? https://stackoverflow.com/questions/13370317/sqlalchemy-default-datetime
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
@@ -18,4 +18,4 @@ class Users(db.Model):
     active    = Column(Boolean(), nullable=False, default=True)
 
     def __repr__(self):
-        return "<User {}>".format(self.username)
+        return "<Area {}>".format(self.username)

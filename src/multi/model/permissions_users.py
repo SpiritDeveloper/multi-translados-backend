@@ -1,16 +1,16 @@
-from sqlalchemy import Column, String, DateTime, Boolean
+from sqlalchemy import Column, ForeignKey, String, DateTime, Boolean
 from sqlalchemy import func
 from sqlalchemy.dialects.postgresql import UUID
 from uuid import uuid4
 from .. import db
 
 
-class Users(db.Model):
+class PermissionsClients(db.Model):
 
-    __tablename__ = "users"
-    id        = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
-    email     = Column(String(80), nullable=False)
-    password  = Column(String(20), nullable=False)
+    __tablename__ = "permissions_clients"
+    id              = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
+    id_person       = Column(UUID(as_uuid=True), ForeignKey("persons.id", ondelete="CASCADE", name="id_person"))
+    id_permission   = Column(UUID(as_uuid=True), ForeignKey("permissions.id", ondelete="CASCADE", name="id_permission"))
     #? https://stackoverflow.com/questions/13370317/sqlalchemy-default-datetime
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
@@ -18,4 +18,4 @@ class Users(db.Model):
     active    = Column(Boolean(), nullable=False, default=True)
 
     def __repr__(self):
-        return "<User {}>".format(self.username)
+        return "<PermissionClient {}>".format(self.username)
