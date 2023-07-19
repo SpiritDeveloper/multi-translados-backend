@@ -5,12 +5,12 @@ from uuid import uuid4
 from .. import db
 
 
-class Operators(db.Model):
+class WorkerBadge(db.Model):
 
-    __tablename__ = "operators"
+    __tablename__ = "workers_badges"
     id                  = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
-    id_person           = Column(UUID(as_uuid=True), ForeignKey("persons.id", ondelete="CASCADE", name="id_person"))
-    id_badge            = Column(String(255), nullable=False)
+    id_worker           = Column(UUID(as_uuid=True), ForeignKey("workers.id", ondelete="CASCADE", name="id_worker"))
+    idBadge            = Column(String(255), nullable=False) #Gafete de identificación
     #? https://stackoverflow.com/questions/13370317/sqlalchemy-default-datetime
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())

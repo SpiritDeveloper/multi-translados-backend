@@ -22,6 +22,7 @@ class Moves(db.Model):
     packaging         = Column(String(4), nullable=False)
     #? https://stackoverflow.com/questions/13370317/sqlalchemy-default-datetime
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    endedAt   = Column(DateTime(timezone=True), nullable=False)
     updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
     deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
     active    = Column(Boolean(), nullable=False, default=True)
