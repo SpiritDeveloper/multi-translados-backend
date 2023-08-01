@@ -24,7 +24,6 @@ class TransferPolicies(db.Model):
     state           = Column(String(255), nullable=False)
     zip_code        = Column(String(5), nullable=False)
     category        = Column(Enum(TypeEnum), nullable=False)
-
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
     deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())

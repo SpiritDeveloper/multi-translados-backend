@@ -1,11 +1,11 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from flask import jsonify
-from ..dto import singInInputSchema, signInInput, signInOutput, signInOutputSchema
+from ..dto import singInInputSchema, signInInput, signInOutput, signInOutputSchema, singUpInputSchema, signUpInput
 from ..services.security_service import Security as SecurityClass
 
 security = Blueprint(
-    "Security", "security", url_prefix="/security/", description="Sign in"
+    "Security", "security", url_prefix="/security/", description="Security Services"
 )
 
 
@@ -13,7 +13,7 @@ class Security(MethodView):
     @security.errorhandler(404)
     def controlled_errors(e):
         return (
-            jsonify(code=404, errors=e.description, message="API error", status="API"),
+            jsonify(success=False, message=e.description, payload={}),
             404,
         )
 
@@ -22,16 +22,15 @@ class Security(MethodView):
         try:
             return (
                 jsonify(
-                    code=402,
-                    errors=e.data["messages"]["json"],
-                    message="API error",
-                    status="API",
+                    success=False,
+                    message=e.data["messages"]["json"],
+                    payload={},
                 ),
                 422,
             )
         except:
             return (
-                jsonify(code=402, errors=str(e), message="API error", status="API"),
+                jsonify(success=402, message=str(e), payload={}),
                 422,
             )
 
@@ -41,4 +40,12 @@ class Security(MethodView):
     def signIn(body: singInInputSchema):
         """Sign In"""
         body: singInInputSchema = signInInput.create(body)
-        return signInOutput.create(SecurityClass.signIn(**body))
+        return signInOutput.create(SecurityClass.signIn(body))
+    
+    @security.route("/signUp", methods=["POST"])
+    @security.arguments(singUpInputSchema, location="json")
+    @security.response(200, signInOutputSchema, content_type="application/json")
+    def signIn(body: singUpInputSchema):
+        """Sign Up"""
+        body: singUpInputSchema = signUpInput.create(body)
+        return signInOutput.create(SecurityClass.signUp(body))

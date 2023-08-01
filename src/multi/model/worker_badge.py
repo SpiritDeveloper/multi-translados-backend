@@ -11,7 +11,6 @@ class WorkerBadge(db.Model):
     id                  = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
     id_worker           = Column(UUID(as_uuid=True), ForeignKey("workers.id", ondelete="CASCADE", name="id_worker"))
     idBadge            = Column(String(255), nullable=False) #Gafete de identificación
-    #? https://stackoverflow.com/questions/13370317/sqlalchemy-default-datetime
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
     deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())

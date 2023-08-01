@@ -20,7 +20,6 @@ class Moves(db.Model):
     sat_key           = Column(String(255), nullable=False)
     measure_unit      = Column(String(255), nullable=False)
     packaging         = Column(String(4), nullable=False)
-    #? https://stackoverflow.com/questions/13370317/sqlalchemy-default-datetime
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     endedAt   = Column(DateTime(timezone=True), nullable=False)
     updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())

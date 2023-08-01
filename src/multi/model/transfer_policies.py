@@ -23,7 +23,6 @@ class TransferPolicies(db.Model):
     #* Opción 2, no tengo pruebas, pero tampoco dudas
     type          = Column(Enum(["chassis", "bodywork", "civil liability"]), nullable=False)
     policy_number = Column(String(50), nullable=False)
-    #? https://stackoverflow.com/questions/13370317/sqlalchemy-default-datetime
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
     deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())

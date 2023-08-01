@@ -6,8 +6,8 @@ from ..exceptions.signIn_exeption import SignInErrors
 
 
 class Security:
-    def signIn(**kwargs: singInInputSchema) -> signInOutputSchema:
-        user: Users = Users.find_one(email=kwargs["email"], password=kwargs["password"])
+    def signIn(signIn: singInInputSchema) -> signInOutputSchema:
+        user: Users = Users.find_one(email=signIn["email"], password=signIn["password"])
 
         if not user:
             SignInErrors.notFoundUser()
@@ -33,3 +33,18 @@ class Security:
         response["payload"] = {}
         response["payload"]["token"] = token
         return response
+
+    def signUp(signUp: singInInputSchema) -> signInOutputSchema:
+        user: Users = Users.find_one(email=signUp["email"])
+
+        if user:
+            SignInErrors.userExist()
+
+        newUser = Users.save(**signUp)
+
+        if not newUser:
+                SignInErrors.userNotCreated()
+        
+        print(newUser)
+        
+        return {}
