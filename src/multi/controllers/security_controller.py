@@ -2,7 +2,7 @@ from flask.views import MethodView
 from flask_smorest import Blueprint
 from flask import jsonify
 from ..dto import singInInputSchema, signInInput, signInOutput, signInOutputSchema, singUpInputSchema, signUpInput
-from ..services.security_service import Security as SecurityClass
+from ..services.security_service import SecurityService
 
 security = Blueprint(
     "Security", "security", url_prefix="/security/", description="Security Services"
@@ -40,7 +40,7 @@ class Security(MethodView):
     def signIn(body: singInInputSchema):
         """Sign In"""
         body: singInInputSchema = signInInput.create(body)
-        return signInOutput.create(SecurityClass.signIn(body))
+        return signInOutput.create(SecurityService.signIn(body))
     
     @security.route("/signUp", methods=["POST"])
     @security.arguments(singUpInputSchema, location="json")
@@ -48,4 +48,4 @@ class Security(MethodView):
     def signIn(body: singUpInputSchema):
         """Sign Up"""
         body: singUpInputSchema = signUpInput.create(body)
-        return signInOutput.create(SecurityClass.signUp(body))
+        return signInOutput.create(SecurityService.signUp(body))

@@ -1,7 +1,7 @@
 from marshmallow import Schema, ValidationError, fields
 
 
-class createAreasInputSchema(Schema):
+class createAreaInputSchema(Schema):
     name                = fields.Str(required=True, description="Area name")
     description  = fields.Str(required=True, description="Area description")
 
@@ -9,9 +9,9 @@ class createAreasInputSchema(Schema):
         ordered = True
 
 
-class createAreasInput:
-    def create(body: createAreasInputSchema):
+class createAreaInput:
+    def create(body: createAreaInputSchema):
         try:
-            return createAreasInputSchema().load(body)
+            return createAreaInputSchema().load(body)
         except ValidationError as err:
             raise Exception(err)

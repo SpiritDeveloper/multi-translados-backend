@@ -1,7 +1,7 @@
 from marshmallow import Schema, ValidationError, fields
 
 
-class updatePositionSchema(Schema):
+class updatePositionInputSchema(Schema):
     id                = fields.Str(required=True, description="Position uuid")
     name                = fields.Str(required=False, description="Position name")
     description  = fields.Str(required=False, description="Position description")
@@ -13,8 +13,8 @@ class updatePositionSchema(Schema):
 
 
 class updatePositionInput:
-    def create(body: updatePositionSchema):
+    def create(body: updatePositionInputSchema):
         try:
-            return updatePositionSchema().load(body)
+            return updatePositionInputSchema().load(body)
         except ValidationError as err:
             raise Exception(err)

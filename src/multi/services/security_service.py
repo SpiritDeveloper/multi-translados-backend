@@ -5,7 +5,7 @@ from ..dto import signInOutputSchema
 from ..exceptions.signIn_exeption import SignInErrors
 
 
-class Security:
+class SecurityService:
     def signIn(signIn: singInInputSchema) -> signInOutputSchema:
         user: Users = Users.find_one(email=signIn["email"], password=signIn["password"])
 
