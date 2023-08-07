@@ -1,9 +1,9 @@
 from sqlalchemy import Column, ForeignKey, String, DateTime, Boolean
-from sqlalchemy import func
+from sqlalchemy import func, exc
 from sqlalchemy.dialects.postgresql import UUID
 from uuid import uuid4
 from .. import db
-
+from datetime import datetime
 
 class VinUnities(db.Model):
 
@@ -18,5 +18,62 @@ class VinUnities(db.Model):
     deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
     active    = Column(Boolean(), nullable=False, default=True)
 
-    def __repr__(self):
-        return "<VinUnit {}>".format(self.username)
+    def save(**kwargs):
+        try:
+            vin = VinUnities(**kwargs)
+            db.session.add(vin)
+            db.session.commit()
+            return vin
+        except Exception as error:
+            print(error)
+            return {}
+        finally:
+            pass
+
+    def find():
+        try:
+            return VinUnities.query.filter_by().all()
+        except:
+            return {}
+        finally:
+            pass
+
+    def find_one(**kwargs):
+        try:
+            return db.session.query(VinUnities).filter_by(**kwargs).first()
+        except exc.SQLAlchemyError as err:
+            print(err)
+            return {}
+        finally:
+            db.session.close()
+
+    def update(**update):
+        try:
+            update["updatedAt"] = datetime.now()
+            updated = (
+                db.session.query(VinUnities)
+                .filter_by(id=str(update["id"]))
+                .update(update, synchronize_session="fetch")
+            )
+            db.session.commit()
+            return updated
+        except Exception as error:
+            print(error)
+            return {}
+
+    def delete(**kwargs) -> int:
+        try:
+            updated = (
+                db.session.query(VinUnities)
+                .filter_by(**kwargs)
+                .update(
+                    {"active": False, "deletedAt": datetime.now()},
+                    synchronize_session="fetch",
+                )
+            )
+            db.session.commit()
+            return updated
+        except exc.SQLAlchemyError as err:
+            print(err)
+            db.session.rollback()
+            return {}

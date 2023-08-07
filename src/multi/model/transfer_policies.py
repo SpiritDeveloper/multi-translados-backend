@@ -1,9 +1,10 @@
 from sqlalchemy import Column, ForeignKey, String, DateTime, Boolean, Enum
-from sqlalchemy import func
+from sqlalchemy import func, exc
 from sqlalchemy.dialects.postgresql import UUID
 from uuid import uuid4
 from .. import db
 from enum import Enum
+from datetime import datetime
 
 #? https://stackoverflow.com/questions/33612625/how-to-model-enums-backed-by-integers-with-sqlachemy
 #? https://docs.sqlalchemy.org/en/14/core/type_basics.html#sqlalchemy.types.Enum
@@ -28,6 +29,62 @@ class TransferPolicies(db.Model):
     deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
     active    = Column(Boolean(), nullable=False, default=True)
 
-    def __repr__(self):
-        return "<TransferPolicy {}>".format(self.username)
+    def save(**kwargs):
+        try:
+            transfer = TransferPolicies(**kwargs)
+            db.session.add(transfer)
+            db.session.commit()
+            return transfer
+        except Exception as error:
+            print(error)
+            return {}
+        finally:
+            pass
 
+    def find():
+        try:
+            return TransferPolicies.query.filter_by().all()
+        except:
+            return {}
+        finally:
+            pass
+
+    def find_one(**kwargs):
+        try:
+            return db.session.query(TransferPolicies).filter_by(**kwargs).first()
+        except exc.SQLAlchemyError as err:
+            print(err)
+            return {}
+        finally:
+            db.session.close()
+
+    def update(**update):
+        try:
+            update["updatedAt"] = datetime.now()
+            updated = (
+                db.session.query(TransferPolicies)
+                .filter_by(id=str(update["id"]))
+                .update(update, synchronize_session="fetch")
+            )
+            db.session.commit()
+            return updated
+        except Exception as error:
+            print(error)
+            return {}
+
+    def delete(**kwargs) -> int:
+        try:
+            updated = (
+                db.session.query(TransferPolicies)
+                .filter_by(**kwargs)
+                .update(
+                    {"active": False, "deletedAt": datetime.now()},
+                    synchronize_session="fetch",
+                )
+            )
+            db.session.commit()
+            return updated
+        except exc.SQLAlchemyError as err:
+            print(err)
+            db.session.rollback()
+            return {}

@@ -84,4 +84,4 @@ class Clients(db.Model):
         except exc.SQLAlchemyError as err:
             print (err)
             db.session.rollback()
-            return{}
+            return {}

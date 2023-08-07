@@ -46,9 +46,9 @@ class Positions(db.Model):
         finally:
             db.session.close()
 
-    def updated(**update):
+    def update(**update):
         try:
-            update["updateAt"] = datetime.now()
+            update["updatedAt"] = datetime.now()
             updated = (
                 db.session.query(Positions)
                 .filter_by(id=str(update["id"]))
@@ -66,7 +66,7 @@ class Positions(db.Model):
                 db.session.query(Positions)
                 .filter_by(**kwargs)
                 .update(
-                    {"active": False, "deleteAt": datetime.now()},
+                    {"active": False, "deletedAt": datetime.now()},
                     synchronize_session="fetch",
                 )
             )

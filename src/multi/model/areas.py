@@ -18,10 +18,10 @@ class Areas(db.Model):
 
     def save(**kwargs):
         try:
-            user = Areas(**kwargs)
-            db.session.add(user)
+            area = Areas(**kwargs)
+            db.session.add(area)
             db.session.commit()
-            return user
+            return area
         except Exception as error:
             print(error)
             return {}
@@ -45,9 +45,9 @@ class Areas(db.Model):
         finally:
             db.session.close()
 
-    def updated(**update):
+    def update(**update):
         try:
-            update["updateAt"] = datetime.now()
+            update["updatedAt"] = datetime.now()
             updated = (
                 db.session.query(Areas)
                 .filter_by(id=str(update["id"]))
@@ -65,7 +65,7 @@ class Areas(db.Model):
                 db.session.query(Areas)
                 .filter_by(**kwargs)
                 .update(
-                    {"active": False, "deleteAt": datetime.now()},
+                    {"active": False, "deletedAt": datetime.now()},
                     synchronize_session="fetch",
                 )
             )
