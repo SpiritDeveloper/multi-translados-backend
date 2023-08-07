@@ -54,15 +54,15 @@ class PositionService:
         return response
     
     def update(body: updatePositionInputSchema):
-        get_area = Areas.find_one( id = body['id_area'] )
-
-        if not get_area:
-            AreaException.notFound()
-
         get_position = Positions.find_one( id = body ['id'])
 
         if not get_position:
             PositionException.notFound()
+
+        get_area = Areas.find_one( id = body['id_area'] )
+
+        if not get_area:
+            AreaException.notFound()
 
         if validateAttribute(body, 'active'):
             body['deletedAt'] = None
