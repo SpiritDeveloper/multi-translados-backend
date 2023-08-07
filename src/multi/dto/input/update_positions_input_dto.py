@@ -1,20 +1,20 @@
 from marshmallow import Schema, ValidationError, fields
 
 
-class updatePositionSchema(Schema):
+class updatePositionInputSchema(Schema):
     id                = fields.Str(required=True, description="Position uuid")
     name                = fields.Str(required=False, description="Position name")
     description  = fields.Str(required=False, description="Position description")
-    title  = fields.Str(required=False, description="Position title")
-    area_id = fields.UUID(required=False, description="Area uuid")
+    id_area = fields.UUID(required=False, description="Area uuid")
+    active = fields.Bool(required=False, description="Position status")
 
     class Meta:
         ordered = True
 
 
 class updatePositionInput:
-    def create(body: updatePositionSchema):
+    def create(body: updatePositionInputSchema):
         try:
-            return updatePositionSchema().load(body)
+            return updatePositionInputSchema().load(body)
         except ValidationError as err:
             raise Exception(err)

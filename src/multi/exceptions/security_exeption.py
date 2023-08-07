@@ -1,7 +1,7 @@
 from . import Error
 
 
-class SignInErrors:
+class SecurityException:
     def userExist():
         Error("email allready exist in the system")
 

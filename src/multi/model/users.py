@@ -2,8 +2,8 @@ from sqlalchemy import Column, ForeignKey, String, DateTime, Boolean
 from sqlalchemy import func, exc
 from sqlalchemy.dialects.postgresql import UUID
 from uuid import uuid4
-from datetime import datetime
 from .. import db
+from datetime import datetime
 
 
 class Users(db.Model):
@@ -19,7 +19,7 @@ class Users(db.Model):
     profile_photo       = Column(String(255), nullable=False)
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
-    deletedAt = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+    deletedAt = Column(DateTime(timezone=True), nullable=True)
     active    = Column(Boolean(), nullable=False, default=True)
 
     def save(**kwargs):
@@ -49,11 +49,11 @@ class Users(db.Model):
             print(err)
             return {}
         finally:
-            db.session.close()
+            pass
 
     def updated(**update):
         try:
-            update["updateAt"] = datetime.now()
+            
             updated = (
                 db.session.query(Users)
                 .filter_by(id=str(update["id"]))
@@ -71,7 +71,7 @@ class Users(db.Model):
                 db.session.query(Users)
                 .filter_by(**kwargs)
                 .update(
-                    {"active": False, "deleteAt": datetime.now()},
+                    {"active": False, "deletedAt": datetime.now()},
                     synchronize_session="fetch",
                 )
             )
