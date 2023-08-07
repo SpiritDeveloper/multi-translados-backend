@@ -1,7 +1,7 @@
 from . import Error
 
 
-class AuthErrors:
+class AuthException:
     def tokenNotFound():
         Error("no valid token was found in the request")
 

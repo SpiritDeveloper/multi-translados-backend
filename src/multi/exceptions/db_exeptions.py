@@ -2,7 +2,7 @@ from typing import Any
 from . import Error
 
 
-class DataBaseErrors:
+class DataBaseException:
     def specificError(message: Any):
         Error(message)
 

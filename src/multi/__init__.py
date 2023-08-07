@@ -80,19 +80,25 @@ def create_app():
     with app.app_context():
         from .controllers import (
             main,
-            security
+            security,
+            area,
+            position
         )
         api = Api(app)
 
         # register modules
         api.register_blueprint(main)
         api.register_blueprint(security)
+        api.register_blueprint(area)
+        api.register_blueprint(position)
 
 
         # register cors
         CORS(app, supports_credentials=True)
         CORS(main, supports_credentials=True)
         CORS(security, supports_credentials=True)
+        CORS(area, supports_credentials=True)
+        CORS(position, supports_credentials=True)
 
         for path, items in api.spec._paths.items():
             for method in items.keys():

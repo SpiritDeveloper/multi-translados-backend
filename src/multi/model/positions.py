@@ -1,33 +1,28 @@
-from sqlalchemy import Column, ForeignKey, String, DateTime, Boolean
+from sqlalchemy import Column, ForeignKey, String, DateTime, Boolean, Enum
 from sqlalchemy import func, exc
 from sqlalchemy.dialects.postgresql import UUID
 from uuid import uuid4
 from .. import db
 from datetime import datetime
 
+class Positions(db.Model):
 
-class Users(db.Model):
-
-    __tablename__ = "users"
-    id        = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
-    name                = Column(String(100), nullable=False)
-    paternal_last_name  = Column(String(100), nullable=False)
-    maternal_last_name  = Column(String(100), nullable=False)
-    email               = Column(String(80), nullable=False)
-    password            = Column(String(20), nullable=False)
-    id_position         = Column(UUID(as_uuid=True), ForeignKey("positions.id", ondelete="CASCADE", name="id_position"))
-    profile_photo       = Column(String(255), nullable=False)
+    __tablename__ = "positions"
+    id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid4())
+    name       = Column(String(255), nullable=False)
+    description = Column(String(255), nullable=False)
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     updatedAt = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
     deletedAt = Column(DateTime(timezone=True), nullable=True)
     active    = Column(Boolean(), nullable=False, default=True)
+    id_area     = Column(UUID(as_uuid=True), ForeignKey("areas.id", ondelete="CASCADE", name="id_areas"))
 
     def save(**kwargs):
         try:
-            user = Users(**kwargs)
-            db.session.add(user)
+            position = Positions(**kwargs)
+            db.session.add(position)
             db.session.commit()
-            return user
+            return position
         except Exception as error:
             print(error)
             return {}
@@ -36,7 +31,7 @@ class Users(db.Model):
 
     def find():
         try:
-            return Users.query.filter_by().all()
+            return Positions.query.filter_by().all()
         except:
             return {}
         finally:
@@ -44,18 +39,18 @@ class Users(db.Model):
 
     def find_one(**kwargs):
         try:
-            return db.session.query(Users).filter_by(**kwargs).first()
+            return db.session.query(Positions).filter_by(**kwargs).first()
         except exc.SQLAlchemyError as err:
             print(err)
             return {}
         finally:
-            pass
+            db.session.close()
 
     def updated(**update):
         try:
             update["updateAt"] = datetime.now()
             updated = (
-                db.session.query(Users)
+                db.session.query(Positions)
                 .filter_by(id=str(update["id"]))
                 .update(update, synchronize_session="fetch")
             )
@@ -68,7 +63,7 @@ class Users(db.Model):
     def delete(**kwargs) -> int:
         try:
             updated = (
-                db.session.query(Users)
+                db.session.query(Positions)
                 .filter_by(**kwargs)
                 .update(
                     {"active": False, "deletedAt": datetime.now()},
