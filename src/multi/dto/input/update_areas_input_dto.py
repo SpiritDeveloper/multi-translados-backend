@@ -2,7 +2,7 @@ from marshmallow import Schema, ValidationError, fields
 
 
 class updateAreaInputSchema(Schema):
-    id                = fields.Str(required=True, description="Area uuid") 
+    id                = fields.UUID(required=True, description="Area uuid") 
     name                = fields.Str(required=False, description="Area name")
     description  = fields.Str(required=False, description="Area description")
     active  = fields.Bool(required=False, description="Area status")

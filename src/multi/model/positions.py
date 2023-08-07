@@ -46,7 +46,7 @@ class Positions(db.Model):
         finally:
             db.session.close()
 
-    def updated(**update):
+    def update(**update):
         try:
             updated = (
                 db.session.query(Positions)

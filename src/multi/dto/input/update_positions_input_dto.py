@@ -2,7 +2,7 @@ from marshmallow import Schema, ValidationError, fields
 
 
 class updatePositionInputSchema(Schema):
-    id                = fields.Str(required=True, description="Position uuid")
+    id                = fields.UUID(required=True, description="Position uuid")
     name                = fields.Str(required=False, description="Position name")
     description  = fields.Str(required=False, description="Position description")
     id_area = fields.UUID(required=False, description="Area uuid")
