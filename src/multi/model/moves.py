@@ -22,8 +22,8 @@ class Moves(db.Model):
     packaging         = Column(String(4), nullable=False)
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     endedAt   = Column(DateTime(timezone=True), nullable=False)
-    updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
-    deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
+    updatedAt = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+    deletedAt = Column(DateTime(timezone=True), nullable=True)
     active    = Column(Boolean(), nullable=False, default=True)
 
     def __repr__(self):

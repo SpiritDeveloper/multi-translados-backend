@@ -26,8 +26,8 @@ class ExtraExpenses(db.Model):
     amount    = Column(String(18), nullable=False)
     #? https://stackoverflow.com/questions/13370317/sqlalchemy-default-datetime
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-    updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
-    deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
+    updatedAt = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+    deletedAt = Column(DateTime(timezone=True), nullable=True)
     active    = Column(Boolean(), nullable=False, default=True)
 
     def __repr__(self):

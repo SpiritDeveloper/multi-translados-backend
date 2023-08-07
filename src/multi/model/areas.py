@@ -12,16 +12,16 @@ class Areas(db.Model):
     name        = Column(String(255), nullable=False)
     description = Column(String(255), nullable=False)
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-    updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
-    deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
+    updatedAt = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+    deletedAt = Column(DateTime(timezone=True), nullable=True)
     active    = Column(Boolean(), nullable=False, default=True)
 
     def save(**kwargs):
         try:
-            user = Areas(**kwargs)
-            db.session.add(user)
+            area = Areas(**kwargs)
+            db.session.add(area)
             db.session.commit()
-            return user
+            return area
         except Exception as error:
             print(error)
             return {}
@@ -47,7 +47,6 @@ class Areas(db.Model):
 
     def updated(**update):
         try:
-            update["updateAt"] = datetime.now()
             updated = (
                 db.session.query(Areas)
                 .filter_by(id=str(update["id"]))
@@ -65,7 +64,7 @@ class Areas(db.Model):
                 db.session.query(Areas)
                 .filter_by(**kwargs)
                 .update(
-                    {"active": False, "deleteAt": datetime.now()},
+                    {"active": False, "deletedAt": datetime.now()},
                     synchronize_session="fetch",
                 )
             )

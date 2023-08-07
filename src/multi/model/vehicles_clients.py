@@ -12,8 +12,8 @@ class VehiclesClients(db.Model):
     id_vehicle  = Column(UUID(as_uuid=True), ForeignKey("vehicles.id", ondelete="CASCADE", name="id_vehicle"))
     id_client   = Column(UUID(as_uuid=True), ForeignKey("clients.id", ondelete="CASCADE", name="id_client"))
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-    updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
-    deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
+    updatedAt = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+    deletedAt = Column(DateTime(timezone=True), nullable=True)
     active    = Column(Boolean(), nullable=False, default=True)
 
     def __repr__(self):

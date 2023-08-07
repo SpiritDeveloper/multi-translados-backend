@@ -23,8 +23,8 @@ class Workers(db.Model):
     municipality        = Column(String(255), nullable=False)
     state               = Column(String(255), nullable=False)
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-    updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
-    deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
+    updatedAt = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+    deletedAt = Column(DateTime(timezone=True), nullable=True)
     active    = Column(Boolean(), nullable=False, default=True)
 
     def __repr__(self):

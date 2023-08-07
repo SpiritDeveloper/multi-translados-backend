@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, EXCLUDE
 
 
 class areaSchema(Schema):
@@ -9,3 +9,4 @@ class areaSchema(Schema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE

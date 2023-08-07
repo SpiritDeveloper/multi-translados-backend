@@ -12,8 +12,8 @@ class PermissionsClients(db.Model):
     id_person       = Column(UUID(as_uuid=True), ForeignKey("persons.id", ondelete="CASCADE", name="id_person"))
     id_permission   = Column(UUID(as_uuid=True), ForeignKey("permissions.id", ondelete="CASCADE", name="id_permission"))
     startedAt = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
-    updatedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
-    deletedAt = Column(DateTime(timezone=True), nullable=False, onupdate=func.now())
+    updatedAt = Column(DateTime(timezone=True), nullable=True, onupdate=func.now())
+    deletedAt = Column(DateTime(timezone=True), nullable=True)
     active    = Column(Boolean(), nullable=False, default=True)
 
     def __repr__(self):

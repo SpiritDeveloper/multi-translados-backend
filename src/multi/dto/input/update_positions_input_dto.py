@@ -5,8 +5,8 @@ class updatePositionInputSchema(Schema):
     id                = fields.Str(required=True, description="Position uuid")
     name                = fields.Str(required=False, description="Position name")
     description  = fields.Str(required=False, description="Position description")
-    title  = fields.Str(required=False, description="Position title")
-    area_id = fields.UUID(required=False, description="Area uuid")
+    id_area = fields.UUID(required=False, description="Area uuid")
+    active = fields.Bool(required=False, description="Position status")
 
     class Meta:
         ordered = True

@@ -1,13 +1,10 @@
 from marshmallow import Schema, ValidationError, fields
-
-
-class deleteRecordSchema(Schema):
-    id = fields.UUID()
+from .area_schema_output_dto import areaSchema
 
 class deleteAreaOutputSchema(Schema):
     success                = fields.Boolean(required=True, description="True if action is correctly")
     message  = fields.Str(required=True, description="Message action")
-    payload = fields.Nested(deleteRecordSchema())
+    payload = fields.Nested(areaSchema())
 
     class Meta:
         ordered = True
