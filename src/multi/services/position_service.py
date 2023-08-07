@@ -54,10 +54,15 @@ class PositionService:
         return response
     
     def update(body: updatePositionInputSchema):
-        get_area = Areas.find_one( id = body['id'] )
+        get_area = Areas.find_one( id = body['id_area'] )
 
         if not get_area:
             AreaException.notFound()
+
+        get_position = Positions.find_one( id = body ['id'])
+
+        if not get_position:
+            PositionException.notFound()
 
         if validateAttribute(body, 'active'):
             body['deletedAt'] = None
@@ -66,18 +71,18 @@ class PositionService:
                 body['deletedAt'] = datetime.now()
 
         
-        update = Areas.updated(**body)
+        update = Positions.updated(**body)
 
         if not update:
             AreaException.notUpdated()
 
 
-        get_area_updated = Areas.find_one( id = body['id'] )    
+        get_position_updated = Positions.find_one( id = body['id'] )    
 
         response = {}
         response['success'] = True
-        response['message'] = 'area successfully created'
-        response['payload'] = get_area_updated.__dict__
+        response['message'] = 'position successfully created'
+        response['payload'] = get_position_updated.__dict__
 
         return response
     

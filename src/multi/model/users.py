@@ -53,7 +53,7 @@ class Users(db.Model):
 
     def updated(**update):
         try:
-            update["updateAt"] = datetime.now()
+            
             updated = (
                 db.session.query(Users)
                 .filter_by(id=str(update["id"]))

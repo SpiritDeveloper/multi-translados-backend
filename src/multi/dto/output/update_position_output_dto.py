@@ -1,13 +1,10 @@
 from marshmallow import Schema, ValidationError, fields
-
-
-class updateRecordPositionSchema(Schema):
-    id = fields.UUID()
+from .position_schema_output_dto import positionSchema
 
 class updatePositionOutputSchema(Schema):
     success                = fields.Boolean(required=True, description="True if action is correctly")
     message  = fields.Str(required=True, description="Message action")
-    payload = fields.Nested(updateRecordPositionSchema())
+    payload = fields.Nested(positionSchema())
 
     class Meta:
         ordered = True
