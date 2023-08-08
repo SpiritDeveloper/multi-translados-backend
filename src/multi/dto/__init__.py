@@ -6,8 +6,10 @@ from .input.create_areas_input_dto import *
 from .input.create_clients_input_dto import *
 from .input.create_positions_input_dto import *
 from .input.delete_areas_input_dto import *
+from .input.delete_clients_input_dto import *
 from .input.delete_positions_input_dto import *
 from .input.update_areas_input_dto import *
+from .input.update_clients_input_dto import *
 from .input.update_positions_input_dto import *
 
 # import output
@@ -19,6 +21,11 @@ from .output.update_area_output_dto import *
 from .output.get_all_area_output_dto import *
 from .output.get_area_output_dto import * 
 from .output.delete_area_output_dto import *
+from .output.create_client_output_dto import *
+from .output.update_client_output_dto import *
+from .output.get_all_client_output_dto import *
+from .output.get_client_output_dto import *
+from .output.delete_client_output_dto import *
 from .output.create_position_output_dto import *
 from .output.update_position_output_dto import *
 from .output.get_all_position_output_dto import *
