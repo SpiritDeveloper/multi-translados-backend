@@ -82,7 +82,8 @@ def create_app():
             main,
             security,
             area,
-            position
+            position,
+            client
         )
         api = Api(app)
 
@@ -91,6 +92,7 @@ def create_app():
         api.register_blueprint(security)
         api.register_blueprint(area)
         api.register_blueprint(position)
+        api.register_blueprint(client)
 
 
         # register cors
@@ -99,6 +101,7 @@ def create_app():
         CORS(security, supports_credentials=True)
         CORS(area, supports_credentials=True)
         CORS(position, supports_credentials=True)
+        CORS(client, supports_credentials=True)
 
         for path, items in api.spec._paths.items():
             for method in items.keys():
