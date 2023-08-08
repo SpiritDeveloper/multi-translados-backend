@@ -47,7 +47,6 @@ class Areas(db.Model):
 
     def update(**update):
         try:
-            update["updatedAt"] = datetime.now()
             updated = (
                 db.session.query(Areas)
                 .filter_by(id=str(update["id"]))
