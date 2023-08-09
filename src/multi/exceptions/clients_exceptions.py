@@ -16,3 +16,9 @@ class ClientException:
 
     def notDeleted():
         Error("there was a problem deleting the client. Please contact the administrator")
+
+    def businessNameExist():
+        Error("the business name already registered")
+
+    def clientCodeExist():
+        Error("the client code already registered")
