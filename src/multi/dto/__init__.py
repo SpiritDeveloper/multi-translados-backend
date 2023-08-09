@@ -34,3 +34,4 @@ from .output.get_position_output_dto import *
 from .output.delete_position_output_dto import *
 from .output.create_vehicle_output_dto import *
 from .output.get_vehicle_output_dto import *
+from .output.get_all_vehicle_output_dto import *

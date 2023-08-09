@@ -18,6 +18,22 @@ class VehicleService:
     return response
 
 
+    def get_all():
+      get_all_vehicles = Vehicles.find()
+
+      vehicles = []
+
+      for vehicles in get_all_vehicles:
+        vehicles.append(vehicle.__dict__)
+
+      response = {}
+      response['success'] = True
+      response['message'] = 'the vehicles were obtained satisfactorily'
+      response['payload'] = vehicles
+
+      return response
+
+
   def create(body: createVehicleInputSchema):
     new_vehicle = Vehicles.save(**body)
 
