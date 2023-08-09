@@ -20,7 +20,7 @@ class Client(MethodView):
     try:
       return(
         jsonify(
-          success=False
+          success=False,
           message=e.date["messages"]["json"],
           payload={},
         ),
@@ -70,7 +70,8 @@ class Client(MethodView):
 
   @client.route("/delete", methods=["DELETE"])
   @client.arguments(deleteClientInputSchema, location="json")
-  @client.response(200, deleteClientInputSchema):
+  @client.response(200, deleteClientOutputSchema, content_type="application/json")
+  def delete(body: deleteClientInputSchema):
     """Delete client"""
     delete_client = deleteClientInput.create(body)
     return deleteClientOutput.create(ClientService.delete(delete_client))
