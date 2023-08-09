@@ -1,6 +1,6 @@
 from ..dto import createClientInputSchema, updateClientInputSchema, deleteClientInputSchema
 from ..model import Clients
-from ..exceptions.clients_exception import ClientException
+from ..exceptions.clients_exceptions import ClientException
 from ..utils.validate_attribute import validateAttribute
 from datetime import datetime
 
@@ -36,6 +36,14 @@ class ClientService:
 
 
   def create(body: createClientInputSchema):
+    get_client_name = Clients.find_one( name = body['business_name'] )
+    if get_client_name:
+      ClientException.businessNameExist()
+
+    get_client_code = Clients.find_one( code = body['code'] )
+    if get_client_code:
+        ClientException.clientCodeExist()
+
     new_client = Clients.save(**body)
 
     if not new_client:
