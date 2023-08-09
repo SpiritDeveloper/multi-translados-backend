@@ -5,6 +5,7 @@ from .input.sign_up_input_dto import *
 from .input.create_areas_input_dto import *
 from .input.create_clients_input_dto import *
 from .input.create_positions_input_dto import *
+from .input.create_vehicles_input_dto import *
 from .input.delete_areas_input_dto import *
 from .input.delete_clients_input_dto import *
 from .input.delete_positions_input_dto import *
@@ -31,3 +32,4 @@ from .output.update_position_output_dto import *
 from .output.get_all_position_output_dto import *
 from .output.get_position_output_dto import *
 from .output.delete_position_output_dto import *
+from .output.create_vehicle_output_dto import *
