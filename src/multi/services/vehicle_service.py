@@ -5,6 +5,19 @@ from ..utils.validate_attribute import validateAttribute
 from datetime import datetime
 
 class VehicleService:
+  def get(vehicleId : str):
+    get_vehicle = Vehicles.find_one( id = vehicleId)
+    if not get_vehicle:
+      VehicleException.notFound()
+
+    response = {}
+    response['success'] = True
+    response['message'] = 'The vehicle was successfully obtained'
+    response['payload'] = get_vehicle.__dict__
+
+    return response
+
+
   def create(body: createVehicleInputSchema):
     new_vehicle = Vehicles.save(**body)
 

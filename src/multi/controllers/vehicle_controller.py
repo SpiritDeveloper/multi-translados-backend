@@ -1,7 +1,7 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from flask import jsonify
-from ..dto import createVehicleInputSchema, createVehicleOutputSchema, createVehicleOutput, createVehicleInput
+from ..dto import createVehicleInputSchema, createVehicleOutputSchema, createVehicleOutput, createVehicleInput, getVehicleOutputSchema, getVehicleOutput
 from ..services.vehicle_service import VehicleService
 vehicle = Blueprint(
   "Vehicle", "vehicle", url_prefix="/vehicle/", description="Vehicle Service"
@@ -35,6 +35,12 @@ class Vehicle(MethodView):
         ),
         422
       )
+
+  @vehicle.route("/get/<uuid:vehicleId>", methods=["GET"])
+  @vehicle.response(200, getVehicleOutputSchema, content_type="application/json")
+  def get_one(vehicleId: str):
+    """Get vehicle by uuid"""
+    return getVehicleOutput.create(VehicleService.get(vehicleId))
 
   @vehicle.route("/create", methods=["POST"])
   @vehicle.arguments(createVehicleInputSchema, location="json")
