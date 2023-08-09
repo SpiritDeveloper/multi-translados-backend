@@ -12,6 +12,7 @@ from .input.delete_positions_input_dto import *
 from .input.update_areas_input_dto import *
 from .input.update_clients_input_dto import *
 from .input.update_positions_input_dto import *
+from .input.update_vehicles_input_dto import *
 
 # import output
 from .output.main_output_dto import *
@@ -35,3 +36,4 @@ from .output.delete_position_output_dto import *
 from .output.create_vehicle_output_dto import *
 from .output.get_vehicle_output_dto import *
 from .output.get_all_vehicle_output_dto import *
+from .output.update_vehicle_output_dto import *

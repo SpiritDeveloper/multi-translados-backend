@@ -7,3 +7,6 @@ class VehicleException:
 
   def notCreated():
     Error("There was a problem creating the vehicle. Please contact the administrator")
+
+  def notUpdated():
+    Error("There was a problem updating the vehicle. Please contact the administrator")
