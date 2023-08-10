@@ -10,3 +10,6 @@ class VehicleException:
 
   def notUpdated():
     Error("There was a problem updating the vehicle. Please contact the administrator")
+
+  def notDeleted():
+    Error("There was a problem deleting the vehicle. Please contact the administrator")
