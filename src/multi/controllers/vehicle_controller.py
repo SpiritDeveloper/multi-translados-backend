@@ -75,3 +75,11 @@ class Vehicle(MethodView):
     """Delete vehicle"""
     delete_vehicle = deleteVehicleInput.delete(body)
     return deleteVehicleOutput.delete(VehicleService.delete(delete_vehicle))
+
+  @vehicle.route("/delete", methods=["DELETE"])
+  @vehicle.arguments(deleteVehicleInputSchema, location="json")
+  @vehicle.response(200, deleteVehicleOutputSchema, content_type="application/json")
+  def delete(body: deleteVehicleInputSchema):
+    """Delete vehicle"""
+    delete_vehicle = deleteVehicleInput.create(body)
+    return deleteVehicleOutput.create(VehicleService.delete(delete_vehicle))
